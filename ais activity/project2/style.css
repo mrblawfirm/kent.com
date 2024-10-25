@@ -1,0 +1,115 @@
+body {
+    background: rgb(0, 0, 0);
+    background: radial-gradient(circle, rgba(0, 0, 0, 0) 0%, rgba(0, 212, 255, 1) 49%, rgba(0, 0, 0, 1) 100%);
+
+}
+
+.title_form {
+    text-align: center;
+    font-family: fantasy;
+    color: rgb(251, 3, 3);
+}
+
+#feedback-form {
+    max-width: 500px;
+    margin: 100px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow:
+        0 0 20px 10px rgba(0, 255, 255, 0.8),
+        0 0 30px 20px rgba(255, 0, 255, 0.6),
+        0 0 40px 30px rgba(255, 255, 0, 0.4);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 20px;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+button[type="submit"] {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #3e8e41;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.star-rating {
+    direction: row;
+    display: flex;
+}
+
+.star {
+    font-size: 50px;
+    color: lightgray;
+    cursor: pointer;
+}
+
+.star:hover,
+.star:hover~.star {
+    color: gold;
+}
+
+.star.selected {
+    color: gold;
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        padding: 5px;
+    }
+
+    header {
+        grid-template-columns: 1fr 40px;
+    }
+
+    header .shopping img {
+        width: 35px;
+    }
+
+    .list {
+        grid-template-columns: 1fr;
+        column-gap: 10px;
+        row-gap: 10px;
+    }
+
+    .list .item img {
+        height: 300px;
+    }
+
+    .card {
+        width: 300px;
+    }
+
+    .active .card {
+        left: calc(100% - 300px);
+    }
+}
+
+@media (min-width: 1440px) {
+    .container {
+        width: 1200px;
+    }
