@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Attorney Dashboard - MRB Law</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body class="bg-gray-100 font-sans text-gray-900">
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-blue-900 text-gray-200 flex flex-col">
+      <div class="flex items-center justify-center h-16 border-b border-blue-800 px-4">
+        <span class="text-2xl font-extrabold text-white tracking-widest">
+          MRB <span class="text-blue-300">LAW</span>
+        </span>
+      </div>
+      <nav class="flex-grow px-6 py-8 space-y-6">
+        <div>
+          <button onclick="showDashboard()" class="flex items-center space-x-4 hover:text-white transition-colors w-full text-left focus:outline-none">
+            <i class="fas fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+          </button>
+        </div>
+
+        <div>
+          <button onclick="showClients()" class="flex items-center space-x-4 hover:text-white transition-colors w-full text-left focus:outline-none">
+            <i class="fas fa-users"></i>
+            <span>Clients</span>
+          </button>
+        </div>
+
+        <div>
+          <button onclick="showCases()" class="flex items-center space-x-4 hover:text-white transition-colors w-full text-left focus:outline-none">
+            <i class="fas fa-briefcase"></i>
+            <span>Cases</span>
+          </button>
+        </div>
+
+        <div>
+          <button onclick="showEvents()" class="flex items-center space-x-4 hover:text-white transition-colors w-full text-left focus:outline-none">
+            <i class="fas fa-calendar"></i>
+            <span>Events</span>
+          </button>
+        </div>
+
+        <div>
+          <button onclick="showDocuments()" class="flex items-center space-x-4 hover:text-white transition-colors w-full text-left focus:outline-none">
+            <i class="fas fa-file-alt"></i>
+            <span>Documents</span>
+          </button>
+        </div>
+
+        <div>
+          <button onclick="showBilling()" class="flex items-center space-x-4 hover:text-white transition-colors w-full text-left focus:outline-none">
+            <i class="fas fa-receipt"></i>
+            <span>Billing</span>
+          </button>
+        </div>
+      </nav>
+      <nav class="px-6 pb-6 space-y-6 border-t border-blue-800">
+        <a href="#" onclick="showSettings()" class="flex items-center space-x-3 hover:text-white transition-colors text-sm">
+          <i class="fas fa-cog"></i>
+          <span>Settings</span>
+        </a>
+        <a href="#" onclick="showHelp()" class="flex items-center space-x-3 hover:text-white transition-colors text-sm">
+          <i class="fas fa-question-circle"></i>
+          <span>Help & Support</span>
+        </a>
+        <a href="#" onclick="logout()" class="flex items-center space-x-3 hover:text-white transition-colors text-sm">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Log Out</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main content -->
+    <main class="flex-1 p-8 overflow-y-auto">
+      <!-- Dashboard Content -->
+      <div id="dashboardContent">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-8">
+          <div>
+            <h1 class="text-3xl font-extrabold" id="welcomeMessage">Welcome, Attorney</h1>
+            <p class="text-gray-700 mt-1">Here's what's happening today</p>
+          </div>
+
+          <!-- Profile dropdown -->
+          <div class="relative inline-block text-left">
+            <button id="profileBtn" type="button" aria-haspopup="true" aria-expanded="false"
+              class="flex items-center space-x-2 bg-white rounded-md border border-gray-300 px-3 py-1 shadow-sm hover:shadow focus:outline-none focus:ring-2 focus:ring-purple-600">
+              <div id="profileAvatar" class="rounded-full w-8 h-8 bg-purple-600 flex items-center justify-center text-white font-bold">
+                A
+              </div>
+              <span class="font-medium text-gray-900" id="profileName">Attorney</span>
+              <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+
+            <div id="profileDropdown" class="origin-top-right absolute right-0 mt-2 w-44 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden focus:outline-none z-10">
+              <div class="py-2">
+                <a href="#" onclick="showProfile()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+                <a href="#" onclick="showSettings()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
+                <a href="#" onclick="logout()" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-100">Sign Out</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div class="bg-white rounded-xl p-6 shadow">
+            <div class="flex items-center">
+              <div class="p-3 rounded-full bg-blue-100 mr-4">
+                <i class="fas fa-users text-blue-600 text-xl"></i>
+              </div>
+              <div>
+                <p class="text-sm text-gray-600">Total Clients</p>
+                <p class="text-2xl font-bold" id="totalClients">0</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl p-6 shadow">
+            <div class="flex items-center">
+              <div class="p-3 rounded-full bg-green-100 mr-4">
+                <i class="fas fa-briefcase text-green-600 text-xl"></i>
+              </div>
+              <div>
+                <p class="text-sm text-gray-600">Active Cases</p>
+                <p class="text-2xl font-bold" id="activeCases">0</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl p-6 shadow">
+            <div class="flex items-center">
+              <div class="p-3 rounded-full bg-purple-100 mr-4">
+                <i class="fas fa-calendar text-purple-600 text-xl"></i>
+              </div>
+              <div>
+                <p class="text-sm text-gray-600">Upcoming Events</p>
+                <p class="text-2xl font-bold" id="upcomingEvents">0</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl p-6 shadow">
+            <div class="flex items-center">
+              <div class="p-3 rounded-full bg-yellow-100 mr-4">
+                <i class="fas fa-receipt text-yellow-600 text-xl"></i>
+              </div>
+              <div>
+                <p class="text-sm text-gray-600">Pending Bills</p>
+                <p class="text-2xl font-bold" id="pendingBills">0</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Activities -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div class="bg-white rounded-xl p-6 shadow">
+            <h3 class="text-lg font-semibold mb-4">Recent Cases</h3>
+            <div id="recentCases" class="space-y-3">
+              <p class="text-gray-500">Loading...</p>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl p-6 shadow">
+            <h3 class="text-lg font-semibold mb-4">Upcoming Events</h3>
+            <div id="upcomingEventsList" class="space-y-3">
+              <p class="text-gray-500">Loading...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Other Content Sections (hidden by default) -->
+      <div id="clientsContent" style="display: none;">
+        <h2 class="text-2xl font-bold mb-6">My Clients</h2>
+        <div id="clientsList">Loading clients...</div>
+      </div>
+
+      <div id="casesContent" style="display: none;">
+        <h2 class="text-2xl font-bold mb-6">My Cases</h2>
+        <div id="casesList">Loading cases...</div>
+      </div>
+
+      <div id="eventsContent" style="display: none;">
+        <h2 class="text-2xl font-bold mb-6">My Events</h2>
+        <div id="eventsList">Loading events...</div>
+      </div>
+
+      <div id="documentsContent" style="display: none;">
+        <h2 class="text-2xl font-bold mb-6">Documents</h2>
+        <div id="documentsList">Loading documents...</div>
+      </div>
+
+      <div id="billingContent" style="display: none;">
+        <h2 class="text-2xl font-bold mb-6">Billing</h2>
+        <div id="billingList">Loading billing...</div>
+      </div>
+
+      <div id="profileContent" style="display: none;">
+        <h2 class="text-2xl font-bold mb-6">My Profile</h2>
+        <div id="profileDetails">Loading profile...</div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Global variables
+    let currentUser = null;
+
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', function () {
+      checkAuth();
+      setupProfileDropdown();
+    });
+
+    // Check if user is authenticated
+    function checkAuth() {
+      const token = localStorage.getItem('token');
+      const user = localStorage.getItem('user');
+
+      if (!token || !user) {
+        window.location.href = '/login';
+        return;
+      }
+
+      try {
+        currentUser = JSON.parse(user);
+        if (currentUser.userType !== 'attorney') {
+          window.location.href = '/login';
+          return;
+        }
+        loadDashboard();
+      } catch (error) {
+        console.error('Error parsing user data:', error);
+        logout();
+      }
+    }
+
+    // Setup profile dropdown
+    function setupProfileDropdown() {
+      const profileBtn = document.getElementById('profileBtn');
+      const profileDropdown = document.getElementById('profileDropdown');
+
+      if (profileBtn && profileDropdown) {
+        profileBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const isHidden = profileDropdown.classList.contains('hidden');
+          profileDropdown.classList.toggle('hidden', !isHidden);
+        });
+
+        window.addEventListener('click', (e) => {
+          if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
+            profileDropdown.classList.add('hidden');
+          }
+        });
+      }
+    }
+
+    // Load dashboard data
+    async function loadDashboard() {
+      try {
+        const token = localStorage.getItem('token');
+        
+        // Update profile info
+        document.getElementById('welcomeMessage').textContent = `Welcome, ${currentUser.name}`;
+        document.getElementById('profileName').textContent = currentUser.name;
+        
+        const initials = currentUser.name.split(' ').map(n => n[0]).join('').substring(0, 2);
+        document.getElementById('profileAvatar').textContent = initials;
+
+        // Load stats
+        await loadStats();
+        
+        // Load recent activities
+        await loadRecentActivities();
+        
+      } catch (error) {
+        console.error('Dashboard error:', error);
+      }
+    }
+
+    // Load statistics
+    async function loadStats() {
+      try {
+        const token = localStorage.getItem('token');
+        
+        // Load case stats
+        const caseStatsResponse = await fetch('/api/cases/stats/overview', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        
+        if (caseStatsResponse.ok) {
+          const caseStats = await caseStatsResponse.json();
+          document.getElementById('activeCases').textContent = caseStats.activeCases || 0;
+        }
+
+        // Load billing stats
+        const billingStatsResponse = await fetch('/api/billing/stats/overview', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        
+        if (billingStatsResponse.ok) {
+          const billingStats = await billingStatsResponse.json();
+          document.getElementById('pendingBills').textContent = billingStats.unpaidBills || 0;
+        }
+
+        // Load client count
+        const clientsResponse = await fetch('/api/users/attorney/clients', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        
+        if (clientsResponse.ok) {
+          const clients = await clientsResponse.json();
+          document.getElementById('totalClients').textContent = clients.length;
+        }
+
+        // Load upcoming events count
+        const eventsResponse = await fetch('/api/events?startDate=' + new Date().toISOString().split('T')[0], {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        
+        if (eventsResponse.ok) {
+          const events = await eventsResponse.json();
+          document.getElementById('upcomingEvents').textContent = events.length;
+        }
+
+      } catch (error) {
+        console.error('Error loading stats:', error);
+      }
+    }
+
+    // Load recent activities
+    async function loadRecentActivities() {
+      try {
+        const token = localStorage.getItem('token');
+        
+        // Load recent cases
+        const casesResponse = await fetch('/api/cases?limit=5', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        
+        if (casesResponse.ok) {
+          const data = await casesResponse.json();
+          displayRecentCases(data.cases);
+        }
+
+        // Load upcoming events
+        const eventsResponse = await fetch('/api/events?limit=5', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        
+        if (eventsResponse.ok) {
+          const events = await eventsResponse.json();
+          displayUpcomingEvents(events);
+        }
+
+      } catch (error) {
+        console.error('Error loading recent activities:', error);
+      }
+    }
+
+    // Display recent cases
+    function displayRecentCases(cases) {
+      const recentCases = document.getElementById('recentCases');
+      
+      if (cases.length === 0) {
+        recentCases.innerHTML = '<p class="text-gray-500">No recent cases</p>';
+        return;
+      }
+      
+      let html = '';
+      cases.forEach(case_ => {
+        const statusColor = case_.status === 'active' ? 'text-green-600' : 'text-yellow-600';
+        html += `
+          <div class="flex justify-between items-center p-3 border rounded-lg">
+            <div>
+              <p class="font-medium">${case_.title}</p>
+              <p class="text-sm text-gray-500">${case_.client.name}</p>
+            </div>
+            <span class="text-sm ${statusColor} font-medium">${case_.status.toUpperCase()}</span>
+          </div>
+        `;
+      });
+      recentCases.innerHTML = html;
+    }
+
+    // Display upcoming events
+    function displayUpcomingEvents(events) {
+      const upcomingEventsList = document.getElementById('upcomingEventsList');
+      
+      if (events.length === 0) {
+        upcomingEventsList.innerHTML = '<p class="text-gray-500">No upcoming events</p>';
+        return;
+      }
+      
+      let html = '';
+      events.forEach(event => {
+        const eventDate = new Date(event.startDate);
+        const formattedDate = eventDate.toLocaleDateString();
+        const formattedTime = eventDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        
+        html += `
+          <div class="flex justify-between items-center p-3 border rounded-lg">
+            <div>
+              <p class="font-medium">${event.title}</p>
+              <p class="text-sm text-gray-500">${formattedDate} at ${formattedTime}</p>
+            </div>
+            <span class="text-sm text-blue-600 font-medium">${event.eventType.replace('-', ' ').toUpperCase()}</span>
+          </div>
+        `;
+      });
+      upcomingEventsList.innerHTML = html;
+    }
+
+    // Navigation functions
+    function showDashboard() {
+      hideAllContent();
+      document.getElementById('dashboardContent').style.display = 'block';
+    }
+
+    function showClients() {
+      hideAllContent();
+      document.getElementById('clientsContent').style.display = 'block';
+      loadClients();
+    }
+
+    function showCases() {
+      hideAllContent();
+      document.getElementById('casesContent').style.display = 'block';
+      loadCases();
+    }
+
+    function showEvents() {
+      hideAllContent();
+      document.getElementById('eventsContent').style.display = 'block';
+      loadEvents();
+    }
+
+    function showDocuments() {
+      hideAllContent();
+      document.getElementById('documentsContent').style.display = 'block';
+      loadDocuments();
+    }
+
+    function showBilling() {
+      hideAllContent();
+      document.getElementById('billingContent').style.display = 'block';
+      loadBilling();
+    }
+
+    function showProfile() {
+      hideAllContent();
+      document.getElementById('profileContent').style.display = 'block';
+      loadProfile();
+    }
+
+    function hideAllContent() {
+      const contents = ['dashboardContent', 'clientsContent', 'casesContent', 'eventsContent', 'documentsContent', 'billingContent', 'profileContent'];
+      contents.forEach(id => {
+        document.getElementById(id).style.display = 'none';
+      });
+    }
+
+    // Load functions (simplified for now)
+    async function loadClients() {
+      const clientsList = document.getElementById('clientsList');
+      clientsList.innerHTML = 'Loading clients...';
+      
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch('/api/users/attorney/clients', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        
+        if (response.ok) {
+          const clients = await response.json();
+          displayClients(clients);
+        }
+      } catch (error) {
+        clientsList.innerHTML = 'Error loading clients';
+      }
+    }
+
+    function displayClients(clients) {
+      const clientsList = document.getElementById('clientsList');
+      
+      if (clients.length === 0) {
+        clientsList.innerHTML = '<p>No clients found</p>';
+        return;
+      }
+      
+      let html = '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">';
+      clients.forEach(client => {
+        html += `
+          <div class="bg-white rounded-lg p-4 shadow">
+            <h4 class="font-bold">${client.name}</h4>
+            <p class="text-gray-600">${client.email}</p>
+            <p class="text-gray-600">${client.phone || 'No phone'}</p>
+            <p class="text-sm text-gray-500">ID: ${client.clientId}</p>
+          </div>
+        `;
+      });
+      html += '</div>';
+      clientsList.innerHTML = html;
+    }
+
+    // Simplified load functions for other sections
+    async function loadCases() {
+      document.getElementById('casesList').innerHTML = 'Cases functionality coming soon...';
+    }
+
+    async function loadEvents() {
+      document.getElementById('eventsList').innerHTML = 'Events functionality coming soon...';
+    }
+
+    async function loadDocuments() {
+      document.getElementById('documentsList').innerHTML = 'Documents functionality coming soon...';
+    }
+
+    async function loadBilling() {
+      document.getElementById('billingList').innerHTML = 'Billing functionality coming soon...';
+    }
+
+    async function loadProfile() {
+      document.getElementById('profileDetails').innerHTML = 'Profile functionality coming soon...';
+    }
+
+    // Utility functions
+    function showSettings() {
+      alert('Settings feature coming soon!');
+    }
+
+    function showHelp() {
+      alert('Help & Support feature coming soon!');
+    }
+
+    function logout() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = '/login';
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Dashboard - MRB Law</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse">
+                <div class="position-sticky pt-3">
+                    <div class="text-center mb-4">
+                        <h4 class="text-white">MRB LAW</h4>
+                        <small class="text-muted">Staff Portal</small>
+                    </div>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#" onclick="showDashboard()">
+                                <i class="fas fa-tachometer-alt me-2"></i>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#" onclick="showClients()">
+                                <i class="fas fa-users me-2"></i>
+                                Clients
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#" onclick="showCases()">
+                                <i class="fas fa-briefcase me-2"></i>
+                                Cases
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#" onclick="showEvents()">
+                                <i class="fas fa-calendar me-2"></i>
+                                Events
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#" onclick="showDocuments()">
+                                <i class="fas fa-file-alt me-2"></i>
+                                Documents
+                            </a>
+                        </li>
+                    </ul>
+                    <hr class="text-white">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#" onclick="showProfile()">
+                                <i class="fas fa-user me-2"></i>
+                                Profile
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#" onclick="logout()">
+                                <i class="fas fa-sign-out-alt me-2"></i>
+                                Logout
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Main content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <!-- Dashboard Content -->
+                <div id="dashboardContent">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2" id="welcomeMessage">Welcome, Staff Member</h1>
+                        <div class="btn-toolbar mb-2 mb-md-0">
+                            <div class="btn-group me-2">
+                                <button type="button" class="btn btn-sm btn-outline-secondary" onclick="showProfile()">
+                                    <i class="fas fa-user"></i> Profile
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stats Cards -->
+                    <div class="row mb-4">
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                Total Users</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="totalUsers">0</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-users fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                Active Cases</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="activeCases">0</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-briefcase fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-info shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                                Documents</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="totalDocuments">0</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-file-alt fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                Pending Tasks</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="pendingTasks">0</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-tasks fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activities -->
+                    <div class="row">
+                        <div class="col-lg-6 mb-4">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Recent Cases</h6>
+                                </div>
+                                <div class="card-body" id="recentCases">
+                                    <p class="text-muted">Loading...</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 mb-4">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Upcoming Events</h6>
+                                </div>
+                                <div class="card-body" id="upcomingEvents">
+                                    <p class="text-muted">Loading...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Other Content Sections -->
+                <div id="clientsContent" style="display: none;">
+                    <h2>Client Management</h2>
+                    <div id="clientsList">Loading clients...</div>
+                </div>
+
+                <div id="casesContent" style="display: none;">
+                    <h2>Case Management</h2>
+                    <div id="casesList">Loading cases...</div>
+                </div>
+
+                <div id="eventsContent" style="display: none;">
+                    <h2>Event Management</h2>
+                    <div id="eventsList">Loading events...</div>
+                </div>
+
+                <div id="documentsContent" style="display: none;">
+                    <h2>Document Management</h2>
+                    <div id="documentsList">Loading documents...</div>
+                </div>
+
+                <div id="profileContent" style="display: none;">
+                    <h2>My Profile</h2>
+                    <div id="profileDetails">Loading profile...</div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Global variables
+        let currentUser = null;
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function () {
+            checkAuth();
+        });
+
+        // Check if user is authenticated
+        function checkAuth() {
+            const token = localStorage.getItem('token');
+            const user = localStorage.getItem('user');
+
+            if (!token || !user) {
+                window.location.href = '/login';
+                return;
+            }
+
+            try {
+                currentUser = JSON.parse(user);
+                if (currentUser.userType !== 'staff') {
+                    window.location.href = '/login';
+                    return;
+                }
+                loadDashboard();
+            } catch (error) {
+                console.error('Error parsing user data:', error);
+                logout();
+            }
+        }
+
+        // Load dashboard data
+        async function loadDashboard() {
+            try {
+                // Update welcome message
+                document.getElementById('welcomeMessage').textContent = `Welcome, ${currentUser.name}`;
+                
+                // Load statistics
+                await loadStats();
+                
+                // Load recent activities
+                await loadRecentActivities();
+                
+            } catch (error) {
+                console.error('Dashboard error:', error);
+            }
+        }
+
+        // Load statistics
+        async function loadStats() {
+            try {
+                const token = localStorage.getItem('token');
+                
+                // Load user stats
+                const userStatsResponse = await fetch('/api/users/stats/overview', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (userStatsResponse.ok) {
+                    const userStats = await userStatsResponse.json();
+                    document.getElementById('totalUsers').textContent = userStats.totalUsers || 0;
+                }
+
+                // Set placeholder values for other stats
+                document.getElementById('activeCases').textContent = '5';
+                document.getElementById('totalDocuments').textContent = '23';
+                document.getElementById('pendingTasks').textContent = '3';
+
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+
+        // Load recent activities
+        async function loadRecentActivities() {
+            try {
+                const recentCases = document.getElementById('recentCases');
+                const upcomingEvents = document.getElementById('upcomingEvents');
+                
+                recentCases.innerHTML = `
+                    <div class="mb-2">
+                        <strong>Johnson vs. Smith</strong><br>
+                        <small class="text-muted">Civil Case - Active</small>
+                    </div>
+                    <div class="mb-2">
+                        <strong>Estate Planning - Wilson</strong><br>
+                        <small class="text-muted">Family Law - Pending</small>
+                    </div>
+                `;
+
+                upcomingEvents.innerHTML = `
+                    <div class="mb-2">
+                        <strong>Court Hearing</strong><br>
+                        <small class="text-muted">Tomorrow at 10:00 AM</small>
+                    </div>
+                    <div class="mb-2">
+                        <strong>Client Meeting</strong><br>
+                        <small class="text-muted">Friday at 2:00 PM</small>
+                    </div>
+                `;
+
+            } catch (error) {
+                console.error('Error loading recent activities:', error);
+            }
+        }
+
+        // Navigation functions
+        function showDashboard() {
+            hideAllContent();
+            document.getElementById('dashboardContent').style.display = 'block';
+        }
+
+        function showClients() {
+            hideAllContent();
+            document.getElementById('clientsContent').style.display = 'block';
+            loadClients();
+        }
+
+        function showCases() {
+            hideAllContent();
+            document.getElementById('casesContent').style.display = 'block';
+            loadCases();
+        }
+
+        function showEvents() {
+            hideAllContent();
+            document.getElementById('eventsContent').style.display = 'block';
+            loadEvents();
+        }
+
+        function showDocuments() {
+            hideAllContent();
+            document.getElementById('documentsContent').style.display = 'block';
+            loadDocuments();
+        }
+
+        function showProfile() {
+            hideAllContent();
+            document.getElementById('profileContent').style.display = 'block';
+            loadProfile();
+        }
+
+        function hideAllContent() {
+            const contents = ['dashboardContent', 'clientsContent', 'casesContent', 'eventsContent', 'documentsContent', 'profileContent'];
+            contents.forEach(id => {
+                document.getElementById(id).style.display = 'none';
+            });
+        }
+
+        // Load functions (simplified for demo)
+        async function loadClients() {
+            const clientsList = document.getElementById('clientsList');
+            clientsList.innerHTML = `
+                <div class="alert alert-info">
+                    <h5>Client Management</h5>
+                    <p>This section allows staff to manage client information, view client details, and assist with client communications.</p>
+                    <p><strong>Note:</strong> Full functionality coming soon!</p>
+                </div>
+            `;
+        }
+
+        async function loadCases() {
+            const casesList = document.getElementById('casesList');
+            casesList.innerHTML = `
+                <div class="alert alert-info">
+                    <h5>Case Management</h5>
+                    <p>This section allows staff to view case information, update case status, and manage case documents.</p>
+                    <p><strong>Note:</strong> Full functionality coming soon!</p>
+                </div>
+            `;
+        }
+
+        async function loadEvents() {
+            const eventsList = document.getElementById('eventsList');
+            eventsList.innerHTML = `
+                <div class="alert alert-info">
+                    <h5>Event Management</h5>
+                    <p>This section allows staff to schedule appointments, manage court dates, and coordinate meetings.</p>
+                    <p><strong>Note:</strong> Full functionality coming soon!</p>
+                </div>
+            `;
+        }
+
+        async function loadDocuments() {
+            const documentsList = document.getElementById('documentsList');
+            documentsList.innerHTML = `
+                <div class="alert alert-info">
+                    <h5>Document Management</h5>
+                    <p>This section allows staff to upload, organize, and manage legal documents for cases and clients.</p>
+                    <p><strong>Note:</strong> Full functionality coming soon!</p>
+                </div>
+            `;
+        }
+
+        async function loadProfile() {
+            const profileDetails = document.getElementById('profileDetails');
+            profileDetails.innerHTML = `
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">${currentUser.name}</h5>
+                        <p class="card-text">
+                            <strong>Email:</strong> ${currentUser.email}<br>
+                            <strong>Position:</strong> ${currentUser.position || 'Staff Member'}<br>
+                            <strong>User Type:</strong> ${currentUser.userType}
+                        </p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Utility functions
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = '/login';
+        }
+    </script>
+</body>
+</html>
