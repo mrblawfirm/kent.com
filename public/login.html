@@ -232,7 +232,7 @@
 
                 <!-- Links -->
                 <div class="mb-4">
-                    <a href="#" class="link-blue d-block mb-2" onclick="showRegisterForm()">Create an account?</a>
+                    <a href="/signup" class="link-blue d-block mb-2">Create an account?</a>
                     <a href="#" class="link-blue d-block" onclick="showForgotPassword()">Forgot Password?</a>
                 </div>
 
@@ -263,6 +263,9 @@
             if (token) {
                 validateTokenAndRedirect();
             }
+
+            // Check for registration success
+            checkRegistrationSuccess();
         });
 
         // Setup toggle group functionality
@@ -412,9 +415,23 @@
             }
         }
 
-        // Placeholder functions for future implementation
-        function showRegisterForm() {
-            showAlert('Registration feature coming soon!', 'info');
+        // Check for registration success
+        function checkRegistrationSuccess() {
+            const registrationSuccess = localStorage.getItem('registrationSuccess');
+            const registeredEmail = localStorage.getItem('registeredEmail');
+            
+            if (registrationSuccess === 'true') {
+                showAlert('Registration successful! You can now sign in with your credentials.', 'success');
+                
+                // Pre-fill email if available
+                if (registeredEmail) {
+                    document.getElementById('email').value = registeredEmail;
+                }
+                
+                // Clear registration success flags
+                localStorage.removeItem('registrationSuccess');
+                localStorage.removeItem('registeredEmail');
+            }
         }
 
         function showForgotPassword() {

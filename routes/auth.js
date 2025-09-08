@@ -12,7 +12,12 @@ router.post('/register', [
   body('email').isEmail().normalizeEmail().withMessage('Please provide a valid email'),
   body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
   body('userType').isIn(['attorney', 'staff', 'client']).withMessage('Invalid user type'),
-  body('phone').optional().isMobilePhone().withMessage('Please provide a valid phone number')
+  body('phone').isMobilePhone().withMessage('Please provide a valid phone number'),
+  body('gender').optional().isIn(['male', 'female', 'other']).withMessage('Invalid gender'),
+  body('dateOfBirth').optional().isISO8601().withMessage('Invalid date of birth'),
+  body('barNumber').optional().trim().isLength({ min: 1 }).withMessage('Bar number cannot be empty'),
+  body('position').optional().trim().isLength({ min: 1 }).withMessage('Position cannot be empty'),
+  body('department').optional().trim().isLength({ min: 1 }).withMessage('Department cannot be empty')
 ], async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -20,7 +25,10 @@ router.post('/register', [
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, password, userType, phone, address, position, barNumber, specializations } = req.body;
+    const { 
+      name, email, password, userType, phone, address, position, 
+      barNumber, specializations, gender, dateOfBirth, department 
+    } = req.body;
 
     // Check if user already exists
     let user = await User.findOne({ email });
@@ -31,9 +39,14 @@ router.post('/register', [
     // Create user data object
     const userData = { name, email, password, userType, phone };
 
+    // Add common optional fields
+    if (gender) userData.gender = gender;
+    if (dateOfBirth) userData.dateOfBirth = new Date(dateOfBirth);
+
     // Add user-type specific fields
     if (address) userData.address = address;
     if (position) userData.position = position;
+    if (department) userData.department = department;
     if (barNumber && userType === 'attorney') userData.barNumber = barNumber;
     if (specializations && userType === 'attorney') userData.specializations = specializations;
 

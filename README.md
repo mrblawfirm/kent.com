@@ -120,6 +120,16 @@ After running the seed script, you can use these credentials:
 - **Password**: password123
 - **User Type**: Client
 
+## Registration System
+
+New users can register through the signup page at `/signup`:
+- **Self-registration** for clients with complete address information
+- **Professional registration** for attorneys with bar number and specializations
+- **Staff registration** with position and department details
+- **Form validation** and comprehensive error handling
+- **Automatic user type detection** with dynamic field customization
+- **Secure password confirmation** and validation
+
 ## API Documentation
 
 ### Authentication Endpoints
@@ -269,6 +279,8 @@ mrb-law-backend/
 npm run dev
 
 # Access different dashboards
+# - Login: http://localhost:5000/login
+# - Registration: http://localhost:5000/signup
 # - Attorney: http://localhost:5000/attorney-dashboard
 # - Staff: http://localhost:5000/staff-dashboard  
 # - Client: http://localhost:5000/client-dashboard

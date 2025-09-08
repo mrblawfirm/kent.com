@@ -33,7 +33,9 @@ const seedData = async () => {
       phone: '09123456789',
       position: 'Senior Attorney',
       barNumber: 'BAR-2020-001',
-      specializations: ['Civil Law', 'Criminal Law', 'Family Law']
+      specializations: ['Civil Law', 'Criminal Law', 'Family Law'],
+      gender: 'male',
+      dateOfBirth: new Date('1985-06-15')
     });
 
     // Create Staff
@@ -44,6 +46,9 @@ const seedData = async () => {
       userType: 'staff',
       phone: '09123456790',
       position: 'Legal Assistant',
+      department: 'Legal',
+      gender: 'female',
+      dateOfBirth: new Date('1990-03-22'),
       createdBy: attorney._id
     });
 
@@ -54,6 +59,8 @@ const seedData = async () => {
       password: 'password123',
       userType: 'client',
       phone: '0955432325458',
+      gender: 'male',
+      dateOfBirth: new Date('1992-08-10'),
       address: {
         street: 'Babag 2',
         city: 'Lapu Lapu City',
@@ -71,6 +78,8 @@ const seedData = async () => {
       password: 'password123',
       userType: 'client',
       phone: '09567890123',
+      gender: 'male',
+      dateOfBirth: new Date('1988-12-05'),
       address: {
         street: '123 Main Street',
         city: 'Cebu City',

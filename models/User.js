@@ -76,6 +76,16 @@ const userSchema = new mongoose.Schema({
     ref: 'User' // Reference to attorney
   },
   
+  // Additional profile fields
+  gender: {
+    type: String,
+    enum: ['male', 'female', 'other'],
+    trim: true
+  },
+  dateOfBirth: {
+    type: Date
+  },
+  
   // Metadata
   lastLogin: {
     type: Date
