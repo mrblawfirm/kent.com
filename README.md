@@ -122,13 +122,28 @@ After running the seed script, you can use these credentials:
 
 ## Registration System
 
-New users can register through the signup page at `/signup`:
-- **Self-registration** for clients with complete address information
-- **Professional registration** for attorneys with bar number and specializations
-- **Staff registration** with position and department details
-- **Form validation** and comprehensive error handling
-- **Automatic user type detection** with dynamic field customization
-- **Secure password confirmation** and validation
+The system provides two separate registration paths:
+
+### Client Registration (`/client-signup`)
+- **Dedicated client signup page** with simplified, focused interface
+- **Complete address collection** (street, city, state, ZIP, country)
+- **Personal information** (name, email, phone, gender, date of birth)
+- **Automatic client ID generation** upon registration
+- **Direct integration** with client dashboard
+
+### Professional Registration (`/signup`)
+- **Attorney and Staff registration** with professional fields
+- **Dynamic form fields** based on selected professional role
+- **Attorney-specific**: Bar number and specializations
+- **Staff-specific**: Position and department information
+- **Professional validation** and credential verification
+
+### Features:
+- **Secure password validation** with confirmation
+- **Real-time form validation** and error handling
+- **Automatic user type detection** and field customization
+- **Seamless login integration** with pre-filled credentials
+- **Responsive design** for all device types
 
 ## API Documentation
 
@@ -280,7 +295,8 @@ npm run dev
 
 # Access different dashboards
 # - Login: http://localhost:5000/login
-# - Registration: http://localhost:5000/signup
+# - Client Registration: http://localhost:5000/client-signup
+# - Professional Registration: http://localhost:5000/signup
 # - Attorney: http://localhost:5000/attorney-dashboard
 # - Staff: http://localhost:5000/staff-dashboard  
 # - Client: http://localhost:5000/client-dashboard

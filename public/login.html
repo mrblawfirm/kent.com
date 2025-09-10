@@ -232,7 +232,8 @@
 
                 <!-- Links -->
                 <div class="mb-4">
-                    <a href="/signup" class="link-blue d-block mb-2">Create an account?</a>
+                    <a href="/client-signup" class="link-blue d-block mb-2">Client Registration</a>
+                    <a href="/signup" class="link-blue d-block mb-2">Professional Registration</a>
                     <a href="#" class="link-blue d-block" onclick="showForgotPassword()">Forgot Password?</a>
                 </div>
 
@@ -419,18 +420,34 @@
         function checkRegistrationSuccess() {
             const registrationSuccess = localStorage.getItem('registrationSuccess');
             const registeredEmail = localStorage.getItem('registeredEmail');
+            const registeredUserType = localStorage.getItem('registeredUserType');
             
             if (registrationSuccess === 'true') {
-                showAlert('Registration successful! You can now sign in with your credentials.', 'success');
+                const userTypeText = registeredUserType === 'client' ? 'Client' : 
+                                   registeredUserType === 'attorney' ? 'Attorney' : 'Staff';
+                showAlert(`${userTypeText} registration successful! You can now sign in with your credentials.`, 'success');
                 
                 // Pre-fill email if available
                 if (registeredEmail) {
                     document.getElementById('email').value = registeredEmail;
                 }
+
+                // Pre-select user type if available
+                if (registeredUserType) {
+                    const toggleButtons = document.querySelectorAll('#userTypeToggle .btn');
+                    toggleButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                        if (btn.getAttribute('data-value') === registeredUserType) {
+                            btn.classList.add('active');
+                            selectedUserType = registeredUserType;
+                        }
+                    });
+                }
                 
                 // Clear registration success flags
                 localStorage.removeItem('registrationSuccess');
                 localStorage.removeItem('registeredEmail');
+                localStorage.removeItem('registeredUserType');
             }
         }
 
