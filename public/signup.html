@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MRB Law - Sign Up</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container-fluid {
+            height: 100vh;
+            padding: 0;
+        }
+
+        .left-panel {
+            background-color: #000;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .left-content {
+            text-align: left;
+            z-index: 2;
+            padding: 2rem;
+        }
+
+        .left-content h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 0.9;
+            margin-bottom: 1rem;
+            letter-spacing: -2px;
+        }
+
+        .left-content p {
+            font-size: 1.1rem;
+            font-weight: 400;
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        .right-panel {
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .form-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .form-title h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #000;
+            margin: 0;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #000;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .form-control,
+        .form-select {
+            background-color: #d1d5db;
+            border: none;
+            border-radius: 25px;
+            padding: 0.75rem 1.25rem;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            background-color: #d1d5db;
+            border: none;
+            box-shadow: 0 0 0 3px rgba(45, 27, 105, 0.1);
+        }
+
+        .row-fields {
+            margin-bottom: 1.5rem;
+        }
+
+        .row-fields .col-6:first-child {
+            padding-right: 0.5rem;
+        }
+
+        .row-fields .col-6:last-child {
+            padding-left: 0.5rem;
+        }
+
+        .row-fields .form-control,
+        .row-fields .form-select {
+            margin-bottom: 0;
+        }
+
+        .user-type-buttons {
+            margin-bottom: 2rem;
+        }
+
+        .btn-group .btn {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: none;
+            background-color: #d1d5db;
+            color: #374151;
+            font-weight: 500;
+            border-radius: 25px !important;
+            margin: 0 2px;
+        }
+
+        .btn-group .btn:first-child {
+            margin-left: 0;
+        }
+
+        .btn-group .btn:last-child {
+            margin-right: 0;
+        }
+
+        .btn-check:checked+.btn {
+            background-color: #6b7280 !important;
+            color: white !important;
+        }
+
+        .btn-register {
+            background-color: #2d1b69;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 0.875rem 2rem;
+            font-weight: 600;
+            font-size: 1rem;
+            width: 100%;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-register:hover {
+            background-color: #1e1348;
+            color: white;
+        }
+
+        .btn-register:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .signin-link {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .signin-link a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .signin-link a:hover {
+            text-decoration: underline;
+        }
+
+        .alert {
+            margin-bottom: 1rem;
+            border-radius: 15px;
+        }
+
+        .loading-spinner {
+            width: 1rem;
+            height: 1rem;
+            margin-right: 0.5rem;
+        }
+
+        /* Additional fields for specific user types */
+        .additional-fields {
+            display: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .additional-fields.show {
+            display: block;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .left-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .container-fluid {
+                height: auto;
+                min-height: 100vh;
+            }
+
+            body {
+                overflow: auto;
+            }
+
+            .right-panel {
+                overflow-y: visible;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row h-100">
+            <!-- Left Panel -->
+            <div class="col-md-6 left-panel">
+                <div class="left-content">
+                    <h1>MRB<br>LAW FIRM</h1>
+                    <p>Register to access your documents</p>
+                </div>
+            </div>
+
+            <!-- Right Panel -->
+            <div class="col-md-6 right-panel">
+                <div class="form-container">
+                    <!-- Form Title -->
+                    <div class="form-title">
+                        <h2>Professional Sign Up</h2>
+                        <div style="background-color: #6f42c1; color: white; padding: 0.25rem 0.75rem; border-radius: 15px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1rem; display: inline-block;">
+                            Attorney & Staff Registration
+                        </div>
+                    </div>
+
+                    <!-- Alert Messages -->
+                    <div id="alertContainer"></div>
+
+                    <!-- Sign Up Form -->
+                    <form id="signupForm">
+                        <!-- Basic Information -->
+                        <div class="mb-3">
+                            <label for="fullName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="fullName" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" required minlength="6">
+                            <small class="text-muted">Password must be at least 6 characters long</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="confirmPassword" required>
+                        </div>
+
+                        <div class="row row-fields">
+                            <div class="col-6">
+                                <label for="gender" class="form-label">Gender</label>
+                                <select class="form-select" id="gender">
+                                    <option value="">Select Gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <label for="dob" class="form-label">Date Of Birth</label>
+                                <input type="date" class="form-control" id="dob">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone" required>
+                        </div>
+
+                        <!-- User Type Selection -->
+                        <div class="user-type-buttons">
+                            <div class="btn-group w-100" role="group">
+                                <input type="radio" class="btn-check" name="userType" id="userType2" value="attorney" autocomplete="off" checked>
+                                <label class="btn" for="userType2">Attorney</label>
+
+                                <input type="radio" class="btn-check" name="userType" id="userType3" value="staff" autocomplete="off">
+                                <label class="btn" for="userType3">Staff</label>
+                            </div>
+                        </div>
+
+
+                        <!-- Attorney Fields -->
+                        <div id="attorneyFields" class="additional-fields">
+                            <div class="mb-3">
+                                <label for="barNumber" class="form-label">Bar Number</label>
+                                <input type="text" class="form-control" id="barNumber">
+                            </div>
+                            <div class="mb-3">
+                                <label for="specializations" class="form-label">Specializations (comma-separated)</label>
+                                <input type="text" class="form-control" id="specializations" placeholder="e.g., Criminal Law, Civil Law, Family Law">
+                            </div>
+                        </div>
+
+                        <!-- Staff Fields -->
+                        <div id="staffFields" class="additional-fields">
+                            <div class="mb-3">
+                                <label for="position" class="form-label">Position</label>
+                                <input type="text" class="form-control" id="position" placeholder="e.g., Legal Assistant, Paralegal">
+                            </div>
+                            <div class="mb-3">
+                                <label for="department" class="form-label">Department</label>
+                                <input type="text" class="form-control" id="department" placeholder="e.g., Legal, Administrative">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-register" id="registerBtn">
+                            <span class="btn-text">REGISTER</span>
+                            <span class="btn-loading" style="display: none;">
+                                <span class="spinner-border loading-spinner" role="status"></span>
+                                Creating Account...
+                            </span>
+                        </button>
+                    </form>
+
+                    <!-- Sign In Link -->
+                    <div class="signin-link">
+                        <a href="/login">Already have an account? Sign in</a>
+                    </div>
+
+                    <!-- Client Registration Link -->
+                    <div class="signin-link">
+                        <a href="/client-signup" style="color: #28a745;">Are you a Client? Register here</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Global variables
+        let selectedUserType = 'attorney';
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function () {
+            setupUserTypeToggle();
+            setupFormValidation();
+            setupFormSubmission();
+        });
+
+        // Setup user type toggle functionality
+        function setupUserTypeToggle() {
+            const userTypeRadios = document.querySelectorAll('input[name="userType"]');
+            userTypeRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    selectedUserType = this.value;
+                    showRelevantFields();
+                });
+            });
+            
+            // Show initial fields
+            showRelevantFields();
+        }
+
+        // Show relevant fields based on user type
+        function showRelevantFields() {
+            const attorneyFields = document.getElementById('attorneyFields');
+            const staffFields = document.getElementById('staffFields');
+
+            // Hide all additional fields
+            attorneyFields.classList.remove('show');
+            staffFields.classList.remove('show');
+
+            // Show relevant fields
+            switch(selectedUserType) {
+                case 'attorney':
+                    attorneyFields.classList.add('show');
+                    break;
+                case 'staff':
+                    staffFields.classList.add('show');
+                    break;
+            }
+        }
+
+        // Setup form validation
+        function setupFormValidation() {
+            const confirmPassword = document.getElementById('confirmPassword');
+            const password = document.getElementById('password');
+
+            confirmPassword.addEventListener('input', function() {
+                if (this.value !== password.value) {
+                    this.setCustomValidity('Passwords do not match');
+                } else {
+                    this.setCustomValidity('');
+                }
+            });
+
+            password.addEventListener('input', function() {
+                if (confirmPassword.value && confirmPassword.value !== this.value) {
+                    confirmPassword.setCustomValidity('Passwords do not match');
+                } else {
+                    confirmPassword.setCustomValidity('');
+                }
+            });
+        }
+
+        // Setup form submission
+        function setupFormSubmission() {
+            const signupForm = document.getElementById('signupForm');
+            signupForm.addEventListener('submit', handleRegistration);
+        }
+
+        // Handle registration form submission
+        async function handleRegistration(event) {
+            event.preventDefault();
+            
+            // Validate passwords match
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                showAlert('Passwords do not match', 'danger');
+                return;
+            }
+
+            // Collect form data
+            const formData = collectFormData();
+            
+            // Validate required fields based on user type
+            if (!validateRequiredFields(formData)) {
+                return;
+            }
+
+            setLoadingState(true);
+            clearAlerts();
+
+            try {
+                const response = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showAlert('Account created successfully! Redirecting to login...', 'success');
+                    
+                    // Store user data temporarily
+                    localStorage.setItem('registrationSuccess', 'true');
+                    localStorage.setItem('registeredEmail', formData.email);
+                    localStorage.setItem('registeredUserType', formData.userType);
+                    
+                    // Redirect to login page after 2 seconds
+                    setTimeout(() => {
+                        window.location.href = '/login';
+                    }, 2000);
+                } else {
+                    if (data.errors) {
+                        // Show validation errors
+                        data.errors.forEach(error => {
+                            showAlert(error.msg, 'danger');
+                        });
+                    } else {
+                        showAlert(data.message || 'Registration failed', 'danger');
+                    }
+                }
+            } catch (error) {
+                console.error('Registration error:', error);
+                showAlert('Network error. Please try again.', 'danger');
+            } finally {
+                setLoadingState(false);
+            }
+        }
+
+        // Collect form data
+        function collectFormData() {
+            const formData = {
+                name: document.getElementById('fullName').value.trim(),
+                email: document.getElementById('email').value.trim().toLowerCase(),
+                password: document.getElementById('password').value,
+                userType: selectedUserType,
+                phone: document.getElementById('phone').value.trim(),
+                gender: document.getElementById('gender').value,
+                dateOfBirth: document.getElementById('dob').value
+            };
+
+            // Add user-type specific fields
+            if (selectedUserType === 'attorney') {
+                const barNumber = document.getElementById('barNumber').value.trim();
+                const specializations = document.getElementById('specializations').value.trim();
+
+                if (barNumber) formData.barNumber = barNumber;
+                if (specializations) {
+                    formData.specializations = specializations.split(',').map(s => s.trim()).filter(s => s);
+                }
+            } else if (selectedUserType === 'staff') {
+                const position = document.getElementById('position').value.trim();
+                const department = document.getElementById('department').value.trim();
+
+                if (position) formData.position = position;
+                if (department) formData.department = department;
+            }
+
+            return formData;
+        }
+
+        // Validate required fields based on user type
+        function validateRequiredFields(formData) {
+            const required = ['name', 'email', 'password', 'phone'];
+            
+            for (let field of required) {
+                if (!formData[field]) {
+                    showAlert(`${field.charAt(0).toUpperCase() + field.slice(1)} is required`, 'danger');
+                    return false;
+                }
+            }
+
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(formData.email)) {
+                showAlert('Please enter a valid email address', 'danger');
+                return false;
+            }
+
+            // Password validation
+            if (formData.password.length < 6) {
+                showAlert('Password must be at least 6 characters long', 'danger');
+                return false;
+            }
+
+            return true;
+        }
+
+        // Show alert message
+        function showAlert(message, type) {
+            const alertContainer = document.getElementById('alertContainer');
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            alertContainer.appendChild(alertDiv);
+
+            // Auto-dismiss after 5 seconds for success messages
+            if (type === 'success') {
+                setTimeout(() => {
+                    if (alertDiv.parentNode) {
+                        alertDiv.remove();
+                    }
+                }, 5000);
+            }
+        }
+
+        // Clear all alerts
+        function clearAlerts() {
+            document.getElementById('alertContainer').innerHTML = '';
+        }
+
+        // Set loading state
+        function setLoadingState(isLoading) {
+            const registerBtn = document.getElementById('registerBtn');
+            const btnText = registerBtn.querySelector('.btn-text');
+            const btnLoading = registerBtn.querySelector('.btn-loading');
+            
+            if (isLoading) {
+                btnText.style.display = 'none';
+                btnLoading.style.display = 'inline-flex';
+                registerBtn.disabled = true;
+            } else {
+                btnText.style.display = 'inline';
+                btnLoading.style.display = 'none';
+                registerBtn.disabled = false;
+            }
+        }
+
+        // Handle demo data population (for testing)
+        function fillDemoData(userType) {
+            document.getElementById('fullName').value = 'John Demo User';
+            document.getElementById('email').value = `demo-${userType}@mrblaw.com`;
+            document.getElementById('password').value = 'password123';
+            document.getElementById('confirmPassword').value = 'password123';
+            document.getElementById('phone').value = '09123456789';
+            document.getElementById('gender').value = 'male';
+            document.getElementById('dob').value = '1990-01-01';
+
+            // Set user type
+            const userTypeRadio = document.querySelector(`input[name="userType"][value="${userType}"]`);
+            if (userTypeRadio) {
+                userTypeRadio.checked = true;
+                selectedUserType = userType;
+                showRelevantFields();
+
+                // Fill type-specific fields
+                if (userType === 'attorney') {
+                    document.getElementById('barNumber').value = 'BAR-DEMO-001';
+                    document.getElementById('specializations').value = 'Civil Law, Criminal Law';
+                } else if (userType === 'staff') {
+                    document.getElementById('position').value = 'Demo Assistant';
+                    document.getElementById('department').value = 'Legal';
+                }
+            }
+        }
+
+        // Add demo buttons for testing (remove in production)
+        if (window.location.hostname === 'localhost') {
+            setTimeout(() => {
+                const formContainer = document.querySelector('.form-container');
+                const demoDiv = document.createElement('div');
+                demoDiv.innerHTML = `
+                    <div class="text-center mb-3">
+                        <small class="text-muted">Demo Data (Development Only):</small><br>
+                        <button type="button" class="btn btn-sm btn-outline-secondary me-1" onclick="fillDemoData('attorney')">Attorney</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="fillDemoData('staff')">Staff</button>
+                    </div>
+                `;
+                formContainer.insertBefore(demoDiv, document.getElementById('signupForm'));
+            }, 1000);
+        }
+    </script>
+</body>
+
+</html>
