@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MRB Law Firm Login</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .login-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .left-panel {
+            flex: 1;
+            background-color: black;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .left-panel h1 {
+            font-size: 4.5rem;
+            font-weight: bold;
+            font-style: italic;
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+
+        .left-panel p {
+            font-size: 1.25rem;
+            font-style: italic;
+        }
+
+        .right-panel {
+            flex: 1;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .login-form-wrapper {
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .scale-icon {
+            width: 24px;
+            height: 24px;
+            vertical-align: middle;
+            margin: 0 0.25rem;
+        }
+
+        .toggle-group {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            background-color: #e0e0e0;
+            border-radius: 0.375rem;
+            padding: 0.25rem;
+        }
+
+        .toggle-group .btn {
+            background-color: transparent;
+            border: none;
+            color: #6c757d;
+            font-weight: normal;
+            padding: 0.75rem 1rem;
+            border-radius: 0.375rem;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .toggle-group .btn.active {
+            background-color: #e0e0e0;
+            color: black;
+            font-weight: bold;
+        }
+
+        .form-control-custom {
+            background-color: #f0f0f0;
+            border: none;
+            height: 3rem;
+            border-radius: 0.375rem;
+        }
+
+        .btn-dark-purple {
+            background-color: #1A0033;
+            color: white;
+            height: 3rem;
+            border-radius: 0.375rem;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-dark-purple:hover {
+            background-color: #1A0033;
+            opacity: 0.9;
+            color: white;
+        }
+
+        .btn-dark-purple:disabled {
+            background-color: #6c757d;
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .link-blue {
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        .link-blue:hover {
+            text-decoration: underline;
+        }
+
+        .privacy-text {
+            font-size: 0.75rem;
+            color: #6c757d;
+        }
+
+        .alert {
+            margin-bottom: 1rem;
+            border-radius: 0.375rem;
+        }
+
+        .loading {
+            display: none;
+        }
+
+        .registration-links {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .registration-links a {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 767.98px) {
+            .login-container {
+                flex-direction: column;
+            }
+
+            .left-panel {
+                min-height: 30vh;
+                padding: 1.5rem;
+            }
+
+            .left-panel h1 {
+                font-size: 3rem;
+            }
+
+            .left-panel p {
+                font-size: 1rem;
+            }
+
+            .right-panel {
+                min-height: 70vh;
+                padding: 1.5rem;
+            }
+
+            body {
+                overflow: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <!-- Left Section -->
+        <div class="left-panel">
+            <div>
+                <h1>MRB<br>LAW FIRM</h1>
+                <p>Sign in to access your documents</p>
+            </div>
+        </div>
+
+        <!-- Right Section -->
+        <div class="right-panel">
+            <div class="login-form-wrapper">
+                <div class="logo-text mb-4">
+                    MRB Law Firm
+                    <img src="https://cdn-icons-png.flaticon.com/512/287/287221.png" alt="Scales of Justice"
+                        class="scale-icon">
+                </div>
+
+                <!-- User Type Toggle -->
+                <div class="toggle-group mb-3" id="userTypeToggle">
+                    <button type="button" class="btn active" data-role="client">Client</button>
+                    <button type="button" class="btn" data-role="attorney">Attorney</button>
+                    <button type="button" class="btn" data-role="staff">Staff</button>
+                </div>
+
+                <!-- Alert Messages -->
+                <div id="alertContainer"></div>
+
+                <!-- Error Message -->
+                <div id="errorMessage" class="alert alert-danger d-none"></div>
+
+                <!-- Success Message -->
+                <div id="successMessage" class="alert alert-success d-none"></div>
+
+                <!-- Loading Spinner -->
+                <div class="loading text-center mb-3" id="loadingSpinner">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2">Signing in...</p>
+                </div>
+
+                <!-- Login Form -->
+                <form id="loginForm">
+                    <input type="hidden" id="userType" name="userType" value="client">
+                    
+                    <div class="mb-3">
+                        <input type="email" id="email" class="form-control form-control-custom"
+                            placeholder="Email Address" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <input type="password" id="password" class="form-control form-control-custom"
+                            placeholder="Password" required>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-dark-purple" id="loginBtn">Sign In</button>
+                    </div>
+                </form>
+
+                <!-- Links -->
+                <div class="mt-3">
+                    <a href="#" class="link-blue" onclick="showForgotPassword()">Forgot Password?</a>
+                </div>
+
+                <!-- Registration Links -->
+                <div class="registration-links">
+                    <small class="text-muted d-block mb-2">Don't have an account?</small>
+                    <a href="/client-signup" class="link-blue">Client Registration</a>
+                    <a href="/signup" class="link-blue">Professional Registration (Attorney/Staff)</a>
+                </div>
+
+                <!-- Privacy Text -->
+                <div class="privacy-text mt-4">
+                    This site is protected by reCAPTCHA and the Google Privacy Policy and Terms of Service apply.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Global variables
+        let selectedUserType = 'client';
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function () {
+            setupUserTypeToggle();
+            setupLoginForm();
+            checkForExistingLogin();
+            checkRegistrationSuccess();
+        });
+
+        // Setup user type toggle functionality
+        function setupUserTypeToggle() {
+            const toggleButtons = document.querySelectorAll('.toggle-group .btn');
+            const userTypeInput = document.getElementById('userType');
+
+            toggleButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    toggleButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    button.classList.add('active');
+                    
+                    // Update selected user type
+                    selectedUserType = button.dataset.role;
+                    userTypeInput.value = selectedUserType;
+                });
+            });
+        }
+
+        // Setup login form submission
+        function setupLoginForm() {
+            const loginForm = document.getElementById('loginForm');
+            loginForm.addEventListener('submit', handleLogin);
+        }
+
+        // Handle login form submission
+        async function handleLogin(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+
+            if (!email || !password) {
+                showError('Please enter both email and password');
+                return;
+            }
+
+            setLoadingState(true);
+            clearMessages();
+
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        password: password,
+                        userType: selectedUserType
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Store authentication data
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    
+                    showSuccess('Login successful! Redirecting...');
+                    
+                    // Redirect based on user type or provided redirect URL
+                    setTimeout(() => {
+                        window.location.href = data.redirectUrl || getDashboardUrl(data.user.userType);
+                    }, 1000);
+                    
+                } else {
+                    // Handle login errors
+                    if (data.errors) {
+                        data.errors.forEach(error => {
+                            showError(error.msg);
+                        });
+                    } else {
+                        showError(data.message || 'Login failed. Please check your credentials and try again.');
+                    }
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showError('Network error. Please check your connection and try again.');
+            } finally {
+                setLoadingState(false);
+            }
+        }
+
+        // Get dashboard URL based on user type
+        function getDashboardUrl(userType) {
+            switch (userType) {
+                case 'client':
+                    return '/client-dashboard';
+                case 'attorney':
+                    return '/attorney-dashboard';
+                case 'staff':
+                    return '/staff-dashboard';
+                default:
+                    return '/';
+            }
+        }
+
+        // Check if user is already logged in
+        function checkForExistingLogin() {
+            const token = localStorage.getItem('token');
+            const user = localStorage.getItem('user');
+
+            if (token && user) {
+                try {
+                    const userData = JSON.parse(user);
+                    showSuccess(`Welcome back, ${userData.name}! Redirecting to your dashboard...`);
+                    
+                    setTimeout(() => {
+                        window.location.href = getDashboardUrl(userData.userType);
+                    }, 1500);
+                } catch (error) {
+                    // Invalid stored data, clear it
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('user');
+                }
+            }
+        }
+
+        // Check for registration success message
+        function checkRegistrationSuccess() {
+            const registrationSuccess = localStorage.getItem('registrationSuccess');
+            const registeredEmail = localStorage.getItem('registeredEmail');
+            const registeredUserType = localStorage.getItem('registeredUserType');
+
+            if (registrationSuccess === 'true') {
+                const userTypeText = registeredUserType === 'client' ? 'Client' : 
+                                   registeredUserType === 'attorney' ? 'Attorney' : 'Staff';
+                showSuccess(`${userTypeText} registration successful! You can now sign in.`);
+
+                // Pre-fill email
+                if (registeredEmail) {
+                    document.getElementById('email').value = registeredEmail;
+                }
+
+                // Pre-select user type
+                if (registeredUserType) {
+                    const toggleButtons = document.querySelectorAll('.toggle-group .btn');
+                    toggleButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                        if (btn.getAttribute('data-role') === registeredUserType) {
+                            btn.classList.add('active');
+                            selectedUserType = registeredUserType;
+                            document.getElementById('userType').value = registeredUserType;
+                        }
+                    });
+                }
+
+                // Clear registration success flags
+                localStorage.removeItem('registrationSuccess');
+                localStorage.removeItem('registeredEmail');
+                localStorage.removeItem('registeredUserType');
+            }
+        }
+
+        // Show error message
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.classList.remove('d-none');
+
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                errorDiv.classList.add('d-none');
+            }, 5000);
+        }
+
+        // Show success message
+        function showSuccess(message) {
+            const successDiv = document.getElementById('successMessage');
+            successDiv.textContent = message;
+            successDiv.classList.remove('d-none');
+
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                successDiv.classList.add('d-none');
+            }, 5000);
+        }
+
+        // Clear all messages
+        function clearMessages() {
+            document.getElementById('errorMessage').classList.add('d-none');
+            document.getElementById('successMessage').classList.add('d-none');
+        }
+
+        // Set loading state
+        function setLoadingState(isLoading) {
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const loginBtn = document.getElementById('loginBtn');
+            const loginForm = document.getElementById('loginForm');
+
+            if (isLoading) {
+                loadingSpinner.style.display = 'block';
+                loginBtn.disabled = true;
+                loginBtn.textContent = 'Signing in...';
+                
+                // Disable form inputs
+                const inputs = loginForm.querySelectorAll('input');
+                inputs.forEach(input => input.disabled = true);
+            } else {
+                loadingSpinner.style.display = 'none';
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'Sign In';
+                
+                // Enable form inputs
+                const inputs = loginForm.querySelectorAll('input');
+                inputs.forEach(input => input.disabled = false);
+            }
+        }
+
+        // Show forgot password alert
+        function showForgotPassword() {
+            showError('Password reset feature coming soon! Please contact support for assistance.');
+        }
+
+        // Demo login function for testing
+        function fillDemoCredentials(userType) {
+            const demoCredentials = {
+                client: { email: 'client@mrblaw.com', password: 'password123' },
+                attorney: { email: 'attorney@mrblaw.com', password: 'password123' },
+                staff: { email: 'staff@mrblaw.com', password: 'password123' }
+            };
+
+            if (demoCredentials[userType]) {
+                document.getElementById('email').value = demoCredentials[userType].email;
+                document.getElementById('password').value = demoCredentials[userType].password;
+
+                // Set user type
+                const toggleButtons = document.querySelectorAll('.toggle-group .btn');
+                toggleButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.getAttribute('data-role') === userType) {
+                        btn.classList.add('active');
+                        selectedUserType = userType;
+                        document.getElementById('userType').value = userType;
+                    }
+                });
+
+                showSuccess(`Demo credentials loaded for ${userType}`);
+            }
+        }
+
+        // Add demo buttons for development
+        if (window.location.hostname === 'localhost') {
+            setTimeout(() => {
+                const wrapper = document.querySelector('.login-form-wrapper');
+                const demoDiv = document.createElement('div');
+                demoDiv.innerHTML = `
+                    <div class="mt-3 p-2 bg-light rounded">
+                        <small class="text-muted d-block mb-2">Demo Login (Development Only):</small>
+                        <div class="d-flex gap-1 justify-content-center">
+                            <button type="button" class="btn btn-sm btn-outline-primary" onclick="fillDemoCredentials('client')">Client</button>
+                            <button type="button" class="btn btn-sm btn-outline-success" onclick="fillDemoCredentials('attorney')">Attorney</button>
+                            <button type="button" class="btn btn-sm btn-outline-info" onclick="fillDemoCredentials('staff')">Staff</button>
+                        </div>
+                    </div>
+                `;
+                wrapper.insertBefore(demoDiv, wrapper.lastElementChild);
+            }, 1000);
+        }
+    </script>
+</body>
+
+</html>

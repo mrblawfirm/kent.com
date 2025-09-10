@@ -46,10 +46,14 @@ app.use('/public', express.static('public'));
 
 // Serve static HTML files
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'login.html'));
+  res.sendFile(path.join(__dirname, 'public', 'simple-login.html'));
 });
 
 app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'simple-login.html'));
+});
+
+app.get('/advanced-login', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 

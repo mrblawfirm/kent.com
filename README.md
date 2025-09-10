@@ -145,6 +145,25 @@ The system provides two separate registration paths:
 - **Seamless login integration** with pre-filled credentials
 - **Responsive design** for all device types
 
+## Login System
+
+The system provides two login page options:
+
+### Simple Login (Default - `/login`)
+- **Clean, minimalist design** matching the provided HTML specification
+- **Three-button user type toggle** (Client, Attorney, Staff)
+- **Streamlined interface** with essential features only
+- **Direct backend integration** with existing authentication API
+- **Registration links** to both client and professional signup pages
+- **Demo login buttons** for development testing
+
+### Advanced Login (`/advanced-login`)
+- **Comprehensive login page** with additional features
+- **Enhanced error handling** and validation messages
+- **Password strength indicators** and security features
+- **Registration success handling** from signup pages
+- **Advanced user experience** with detailed feedback
+
 ## API Documentation
 
 ### Authentication Endpoints
@@ -294,7 +313,8 @@ mrb-law-backend/
 npm run dev
 
 # Access different dashboards
-# - Login: http://localhost:5000/login
+# - Simple Login: http://localhost:5000/login (default)
+# - Advanced Login: http://localhost:5000/advanced-login (alternative)
 # - Client Registration: http://localhost:5000/client-signup
 # - Professional Registration: http://localhost:5000/signup
 # - Attorney: http://localhost:5000/attorney-dashboard
